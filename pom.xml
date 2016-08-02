@@ -13,7 +13,7 @@
     <hibernate.version>4.3.5.Final</hibernate.version>
     <log4j.version>1.2.17</log4j.version>
     <context.path>learn-spring-rest-hibernate</context.path>
-    <jdk.version>1.8</jdk.version>
+    <jdk.version>1.7</jdk.version>
   </properties>
   
   <dependencies>
@@ -82,7 +82,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <source>${jdk.version}</source>
-          <target>${jdk.version</target>
+          <target>${jdk.version}</target>
         </configuration>
       </plugin>
     </plugins>
