@@ -7,97 +7,129 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import javax.persistence.IdClass;
+import javax.persistence.Id;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 
 @Entity
 @Table(name="sppt_terhutang")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@IdClass(Sppt.SpptPK.class)
 public class Sppt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@EmbeddedId
-	private SpptPK spptPK;
+
+	//@EmbeddedId
+	//private SpptPK spptPK;
+	@Id
+  @AttributeOverrides({
+		@AttributeOverride(name="nop", column=@Column(name="NOP")),
+		@AttributeOverride(name="thn", column=@Column(name="THN"))
+	})
+
+
+  private String nop;
+	private String thn;
+	@Column(name="NAMA")
 	private String nama;
+	@Column(name="ALAMAT_OP")
 	private String alamatOp;
+	@Column(name="POKOK")
 	private BigInteger pokok;
+	@Column(name="DENDA")
 	private BigInteger denda;
-	
+
 	// --- setter getter
-	
+  /*
 	public SpptPK getSpptPK() {
 		return spptPK;
 	}
-	
+
 	public void setSpptPK(SpptPK spptPK) {
 		this.spptPK = spptPK;
 	}
-	
+	*/
+	public String getNop() {
+		return nop;
+	}
+
+	public void setNop(String nop) {
+		this.nop = nop;
+	}
+
+	public String getThn() {
+		return thn;
+	}
+
+	public void setThn(String thn) {
+		this.thn = thn;
+	}
+
 	public String getNama() {
 		return nama;
 	}
-	
+
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
-	
+
 	public String getAlamatOp() {
 		return alamatOp;
 	}
-	
+
 	public void setAlamatOp(String alamatOp) {
 		this.alamatOp = alamatOp;
 	}
-	
+
 	public BigInteger getPokok() {
 		return pokok;
 	}
-	
+
 	public void setPokok(BigInteger pokok) {
 		this.pokok = pokok;
 	}
-	
+
 	public BigInteger getDenda() {
 		return denda;
 	}
-	
+
 	public void setDenda(BigInteger denda) {
 		this.denda = denda;
 	}
-	
-	
+
+
 	// --- inner class
 	@Embeddable
 	public static class SpptPK implements Serializable {
 		private static final long serialVersionUID = 1L;
-		
+
 		protected String nop;
-		protected String thnPajak;
-		
+		protected String thn;
+
 		public SpptPK() {}
-		
-		public SpptPK(String nop, String thnPajak) {
+
+		public SpptPK(String nop, String thn) {
 			this.nop = nop;
-			this.thnPajak = thnPajak;
+			this.thn = thn;
 		}
-		
+
 		public String getNop() {
 			return nop;
 		}
-		
-		public String thnPajak() {
-			return thnPajak;
+
+		public String getThn() {
+			return thn;
 		}
-		
+
 		public void setNop(String nop) {
 			this.nop = nop;
 		}
-		
-		public void setThnPajak(String thnPajak) {
-			this.thnPajak = thnPajak;
+
+		public void setThn(String thn) {
+			this.thn = thn;
 		}
-		
+
 	}
 
 }

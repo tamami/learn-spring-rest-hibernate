@@ -1,31 +1,38 @@
 package lab.aikibo.dao;
 
+import java.util.List;
 
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import lab.aikibo.model.Sppt;
 import lab.aikibo.model.Sppt.SpptPK;
+import lab.aikibo.controller.SpptRestController;
 
-public class SpptDaoImpl implements SpptDao {
-	
-	@Autowired
-	SessionFactory sessionFactory;
-	
+
+@Repository("spptDao")
+public class SpptDaoImpl extends AbstractDao<Integer, Sppt> implements SpptDao {
+
 	Session session = null;
 	Transaction tx = null;
 
 	@Override
-	public Sppt getSpptByNopThn(String nop, String thn) throws Exception {
-		session = sessionFactory.openSession();
-		SpptPK spptPk = new SpptPK(nop, thn);
-		Sppt sppt = (Sppt) session.get(Sppt.class, spptPk);
-		tx = session.getTransaction();
-		session.beginTransaction();
-		tx.commit();
-		
+	public Sppt getSpptByNopThn(String nop, String thn) {
+		session = getSession();
+		//SpptPK spptPk = new SpptPK(nop, thn);
+		Sppt sppt;
+		Query qry = session.createQuery("from Sppt where nop = :nop and thn = :thn");
+		qry.setParameter("nop", nop);
+		qry.setParameter("thn", thn);
+		List<Sppt> list = (List<Sppt>) qry.list();
+    SpptRestController.getLogger().debug("-----");
+		SpptRestController.getLogger().debug("DATA LIST ADA : " + list.size());
+		sppt = (Sppt) list.get(0);
+
 		return sppt;
 	}
 
