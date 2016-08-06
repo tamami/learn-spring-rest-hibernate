@@ -12,12 +12,18 @@ import lab.aikibo.model.Sppt;
 import lab.aikibo.model.Status;
 import lab.aikibo.model.Message;
 import lab.aikibo.services.SpptServices;
+import lab.aikibo.services.RefKelurahanService;
+import lab.aikibo.model.RefKelurahan;
+
+import java.util.List;
 
 @RestController
 public class SpptRestController {
 
 	@Autowired
 	SpptServices spptService;
+	@Autowired
+	RefKelurahanService refKelurahanService;
 
 	static final Logger logger = Logger.getLogger(SpptRestController.class);
 
@@ -31,19 +37,6 @@ public class SpptRestController {
 		info += "gunakan perintah berikut:";
 		return info;
 	}
-
-	// sample for transaction
-	/*
-	@RequestMapping(value="/create", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status trxPbb(@RequestBody ReqTransaksi trx) {
-		try {
-			spptService.addEntity(trx);
-			return new Status(1, "Transaction Successfully!");
-		} catch(Exception e) {
-			return new Status(0, e.toString());
-		}
-	}
-	*/
 
 	// single inquiry
 	@RequestMapping(value="/sppt/{nop}/{thn}", method = RequestMethod.GET)
@@ -59,6 +52,17 @@ public class SpptRestController {
 		}
 
 		return sppt;
+	}
+
+	@RequestMapping(value="/daftarKelurahan/{kdKecamatan}", method = RequestMethod.GET)
+	public List<RefKelurahan> getDaftarKelurahan(@PathVariable("kdKecamatan")String kdKecamatan) {
+		List<RefKelurahan> result = null;
+		try {
+			result = refKelurahanService.getDaftarKelurahan(kdKecamatan);
+		} catch(Exception e) {
+			logger.debug(e);
+		}
+		return result;
 	}
 
 	@RequestMapping(value="/info/{user}", method = RequestMethod.GET)
