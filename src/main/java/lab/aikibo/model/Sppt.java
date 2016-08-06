@@ -117,7 +117,7 @@ public class Sppt implements Serializable {
 			if(obj == this) return true;
 			if(!(obj instanceof SpptPK)) return false;
 
-			SpptPK pk = (SpptPk) obj;
+			SpptPK pk = (SpptPK) obj;
 
 			return pk.nop.equals(nop) && pk.thn.equals(thn);
 		}
