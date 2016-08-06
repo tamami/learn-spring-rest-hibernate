@@ -15,21 +15,14 @@ import javax.persistence.Column;
 
 @Entity
 @Table(name="sppt_terhutang")
-@IdClass(Sppt.SpptPK.class)
+@IdClass(value=Sppt.SpptPK.class)
 public class Sppt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	//@EmbeddedId
-	//private SpptPK spptPK;
 	@Id
-  @AttributeOverrides({
-		@AttributeOverride(name="nop", column=@Column(name="NOP")),
-		@AttributeOverride(name="thn", column=@Column(name="THN"))
-	})
-
-
   private String nop;
+	@Id
 	private String thn;
 	@Column(name="NAMA")
 	private String nama;
@@ -40,16 +33,6 @@ public class Sppt implements Serializable {
 	@Column(name="DENDA")
 	private BigInteger denda;
 
-	// --- setter getter
-  /*
-	public SpptPK getSpptPK() {
-		return spptPK;
-	}
-
-	public void setSpptPK(SpptPK spptPK) {
-		this.spptPK = spptPK;
-	}
-	*/
 	public String getNop() {
 		return nop;
 	}
@@ -100,8 +83,7 @@ public class Sppt implements Serializable {
 
 
 	// --- inner class
-	@Embeddable
-	public static class SpptPK implements Serializable {
+	public class SpptPK implements Serializable {
 		private static final long serialVersionUID = 1L;
 
 		protected String nop;
@@ -128,6 +110,24 @@ public class Sppt implements Serializable {
 
 		public void setThn(String thn) {
 			this.thn = thn;
+		}
+
+    @Override
+		public boolean equals(Object obj) {
+			if(obj == this) return true;
+			if(!(obj instanceof SpptPK)) return false;
+
+			SpptPK pk = (SpptPk) obj;
+
+			return pk.nop.equals(nop) && pk.thn.equals(thn);
+		}
+
+    @Override
+		public int hashCode() {
+			int result = 17;
+			result = 31 * result + nop.hashCode();
+			result = 31 * result + thn.hashCode();
+			return result;
 		}
 
 	}
