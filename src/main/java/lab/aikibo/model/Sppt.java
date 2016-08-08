@@ -14,7 +14,7 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 
 @Entity
-@Table(name="sppt_terhutang")
+@Table(name="sppt_terhutang_matre")
 @IdClass(Sppt.SpptPK.class)
 public class Sppt implements Serializable {
 
