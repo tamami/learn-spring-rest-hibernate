@@ -34,7 +34,7 @@ public class HibernateConfiguration {
   public LocalSessionFactoryBean sessionFactory() {
     LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
     sessionFactory.setDataSource(dataSource());
-    sessionFactory.setPackagesToScan(new String[] {"lab.aikibo.mode"});
+    sessionFactory.setPackagesToScan(new String[] {"lab.aikibo.model"});
     sessionFactory.setHibernateProperties(hibernateProperties());
     return sessionFactory;
   }

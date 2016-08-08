@@ -25,9 +25,10 @@ public class SpptDaoImpl extends AbstractDao<Integer, Sppt> implements SpptDao {
 		session = getSession();
 		//SpptPK spptPk = new SpptPK(nop, thn);
 		Sppt sppt;
-		Query qry = session.createQuery("from Sppt where nop = :nop and thn = :thn");
+		Query qry = session.createQuery("from Sppt s where s.nop = :nop and s.thn = :thn");
 		qry.setParameter("nop", nop);
 		qry.setParameter("thn", thn);
+		SpptRestController.getLogger().debug(">>> sql: " + qry.getQueryString());
 		List<Sppt> list = (List<Sppt>) qry.list();
     SpptRestController.getLogger().debug("-----");
 		SpptRestController.getLogger().debug("DATA LIST ADA : " + list.size());

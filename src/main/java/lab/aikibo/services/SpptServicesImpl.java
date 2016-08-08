@@ -6,8 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lab.aikibo.dao.SpptDao;
 import lab.aikibo.model.Sppt;
+import lab.aikibo.controller.SpptRestController;
 
-@Service("spptService")
+@Service("spptServices")
 @Transactional
 public class SpptServicesImpl implements SpptServices {
 
@@ -16,6 +17,7 @@ public class SpptServicesImpl implements SpptServices {
 
 	@Override
 	public Sppt getSpptByNopThn(String nop, String thn) {
+		SpptRestController.getLogger().debug("Sudah masuk ke SpptServicesImpl.getSpptByNopThn(" + nop + "," + thn + ")");
 		return spptDao.getSpptByNopThn(nop, thn);
 	}
 

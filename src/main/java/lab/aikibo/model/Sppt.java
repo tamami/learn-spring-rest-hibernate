@@ -20,16 +20,9 @@ public class Sppt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	//@EmbeddedId
-	//private SpptPK spptPK;
 	@Id
-  @AttributeOverrides({
-		@AttributeOverride(name="nop", column=@Column(name="NOP")),
-		@AttributeOverride(name="thn", column=@Column(name="THN"))
-	})
-
-
   private String nop;
+	@Id
 	private String thn;
 	@Column(name="NAMA")
 	private String nama;
@@ -41,15 +34,7 @@ public class Sppt implements Serializable {
 	private BigInteger denda;
 
 	// --- setter getter
-  /*
-	public SpptPK getSpptPK() {
-		return spptPK;
-	}
 
-	public void setSpptPK(SpptPK spptPK) {
-		this.spptPK = spptPK;
-	}
-	*/
 	public String getNop() {
 		return nop;
 	}
