@@ -12,12 +12,16 @@ import lab.aikibo.model.Sppt;
 import lab.aikibo.model.Status;
 import lab.aikibo.model.Message;
 import lab.aikibo.services.SpptServices;
+import lab.aikibo.services.PembayaranServices;
 
 @RestController
 public class SpptRestController {
 
 	@Autowired
 	SpptServices spptServices;
+
+	@Autowired
+	PembayaranServices pembayaranServices;
 
 	static final Logger logger = Logger.getLogger(SpptRestController.class);
 
@@ -46,6 +50,19 @@ public class SpptRestController {
 		}
 
 		return sppt;
+	}
+
+	// single transaction
+  @RequestMapping(value="/bayar/{nop}/{thn}/{pokok}/{denda}")
+	public StatusPembayaran prosesPembayaran(@PathVariable("nop") String nop,
+			@PathVariable("thn") String thnPajak, @PathVariable("pokok") BigInteger pokok,
+			@PathVariable("denda") BigInteger denda) {
+	  Status status;
+		try {
+			status = pembayaranServices.prosesPembayaran(nop, thnPajak, pokok, denda);
+		} catch(Exception e) {
+			logger.error(e);
+		}
 	}
 
 	@RequestMapping(value="/info/{user}", method = RequestMethod.GET)
