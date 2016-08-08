@@ -73,6 +73,25 @@
       <version>${hibernate.version}</version>
     </dependency>
 
+    <!-- bonecp -->
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp-provider</artifactId>
+      <version>0.8.0-alpha1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp</artifactId>
+      <version>0.8.0.RELEASE</version>
+    </dependency>
+
+    <!-- hikaricp, pengganti bonecp -->
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>2.4.7</version>
+    </dependency>
+
     <!-- jsr303 validation -->
     <dependency>
       <groupId>javax.validation</groupId>
