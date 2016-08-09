@@ -5,6 +5,7 @@ import javax.persistence.Table;
 import javax.persistence.IdClass;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 import java.util.Date;
 
@@ -116,43 +117,83 @@ public class SpptSismiop implements Serializable {
 
   public String getKdPropinsi() { return kdPropinsi; }
 
+  public void setKdPropinsi(String kdPropinsi) { this.kdPropinsi = kdPropinsi; }
+
   public String getKdDati2() { return kdDati2; }
+
+  public void setKdDati2(String kdDati2) { this.kdDati2 = kdDati2; }
 
   public String getKdKecamatan() { return kdKecamatan; }
 
+  public void setKdKecamatan(String kdKecamatan) { this.kdKecamatan = kdKecamatan; }
+
   public String getKdKelurahan() { return kdKelurahan; }
+
+  public void setKdKelurahan(String kdKelurahan) { this.kdKelurahan = kdKelurahan; }
 
   public String getKdBlok() { return kdBlok; }
 
+  public void setKdBlok(String kdBlok) { this.kdBlok = kdBlok; }
+
   public String getNoUrut() { return noUrut; }
+
+  public void setNoUrut(String noUrut) { this.noUrut = noUrut; }
 
   public String getKdJnsOp() { return kdJnsOp; }
 
+  public void setKdJnsOp(String kdJnsOp) { this.kdJnsOp = kdJnsOp; }
+
   public String getThnPajakSppt() { return thnPajakSppt; }
+
+  public void setThnPajakSppt(String thnPajakSppt) { this.thnPajakSppt = thnPajakSppt; }
 
   public int getSiklusSppt() { return siklusSppt; }
 
+  public void setSiklusSppt(int siklusSppt) { this.siklusSppt = siklusSppt; }
+
   public String getKdKanwilBank() { return kdKanwilBank; }
+
+  public void setKdKanwilBank(String kdKanwilBank) { this.kdKanwilBank = kdKanwilBank; }
 
   public String getKdKppbbBank() { return kdKppbbBank; }
 
+  public void setKdKppbbBank(String kdKppbbBank) { this.kdKppbbBank = kdKppbbBank; }
+
   public String getKdBankTunggal() { return kdBankTunggal; }
+
+  public void setKdBankTunggal(String kdBankTunggal) { this.kdBankTunggal = kdBankTunggal; }
 
   public String getKdBankPersepsi() { return kdBankPersepsi; }
 
+  public void setKdBankPersepsi(String kdBankPersepsi) { this.kdBankPersepsi = kdBankPersepsi; }
+
   public String getKdTp() { return kdTp; }
+
+  public void setKdTp(String kdTp) { this.kdTp = kdTp; }
 
   public String getNmWpSppt() { return nmWpSppt; }
 
+  public void setNmWpSppt(String nmWpSppt) { this.nmWpSppt = nmWpSPpt; }
+
   public String getJlnWpSppt() { return jlnWpSppt; }
+
+  public void setJlnWpSppt(String jlnWpSppt) { this.jlnWpSppt = jlnWpSPpt; }
 
   public String getBlokKavNoWpSppt() { return blokKavNoWpSppt; }
 
+  public void setBlokKavNoWpSppt(String blokKavNoWpSppt) { this.blokKavNoWpSppt = blokKavNoWpSppt; }
+
   public String getRwWpSppt() { return rwWpSppt; }
+
+  public void setRwWpSppt(String rwWpSppt) { this.rwWpSppt = rwWpSppt; }
 
   public String getRtWpSppt() { return rtWpSppt; }
 
+  public void setRtWpSppt(String rtWpSppt) { this.rtWpSppt = rtWpSppt; }
+
   public String getKelurahanWpSppt() { return kelurahanWpSppt; }
+
+  public void setKelurahanWpSppt(String kelurahanWpSppt) { this.kelurahanWpSppt = kelurahanWpSppt; }
 
   public String getKotaWpSppt() { return kotaWpSppt; }
 
@@ -206,6 +247,7 @@ public class SpptSismiop implements Serializable {
 
   // --- inner class
 
+  @Embeddable
   public class SpptSismiopPk implements Serializable {
 
     private static final long serialVersionUID = 4L;
