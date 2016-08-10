@@ -1,15 +1,20 @@
 package lab.aikibo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import lab.aikibo.dao.PembayaranDao;
 import lab.aikibo.model.Status;
 
 import java.math.BigInteger;
 
+@Service("pembayaranServices")
+@Transactional
 public class PembayaranServicesImpl implements PembayaranServices {
   @Autowired
-  private PembayaranDao pembayaranDao
+  private PembayaranDao pembayaranDao;
 
   @Override
   public Status prosesPembayaran(String nop, String thn, BigInteger pokok, BigInteger denda) {

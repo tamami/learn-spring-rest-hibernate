@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lab.aikibo.dao.SpptDao;
+import lab.aikibo.dao.StoreProceduresDao;
 import lab.aikibo.model.Sppt;
 import lab.aikibo.controller.SpptRestController;
 
@@ -15,10 +16,13 @@ public class SpptServicesImpl implements SpptServices {
 	@Autowired
 	private SpptDao spptDao;
 
+	@Autowired
+	private StoreProceduresDao spDao;
+
 	@Override
 	public Sppt getSpptByNopThn(String nop, String thn) {
-		SpptRestController.getLogger().debug("Sudah masuk ke SpptServicesImpl.getSpptByNopThn(" + nop + "," + thn + ")");
-		return spptDao.getSpptByNopThn(nop, thn);
+		//return spptDao.inqSpptByNopThn(nop, thn);
+		return spDao.getDataSppt(nop, thn);
 	}
 
 }

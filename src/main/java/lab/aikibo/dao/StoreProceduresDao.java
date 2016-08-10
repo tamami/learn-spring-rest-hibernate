@@ -1,7 +1,7 @@
 package lab.aikibo.dao;
 
-import lab.aikibo.model.SpptSismiop;
+import lab.aikibo.model.Sppt;
 
 public interface StoreProceduresDao {
-  public SpptSismiop getDataSppt(String nop, String thn);
+  public Sppt getDataSppt(String nop, String thn);
 }

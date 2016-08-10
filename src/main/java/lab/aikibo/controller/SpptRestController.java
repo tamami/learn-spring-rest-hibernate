@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.math.BigInteger;
+
 import lab.aikibo.model.Sppt;
 import lab.aikibo.model.Status;
 import lab.aikibo.model.Message;
@@ -54,15 +56,17 @@ public class SpptRestController {
 
 	// single transaction
   @RequestMapping(value="/bayar/{nop}/{thn}/{pokok}/{denda}")
-	public StatusPembayaran prosesPembayaran(@PathVariable("nop") String nop,
+	public Status prosesPembayaran(@PathVariable("nop") String nop,
 			@PathVariable("thn") String thnPajak, @PathVariable("pokok") BigInteger pokok,
 			@PathVariable("denda") BigInteger denda) {
-	  Status status;
+	  Status status = null;
 		try {
 			status = pembayaranServices.prosesPembayaran(nop, thnPajak, pokok, denda);
 		} catch(Exception e) {
 			logger.error(e);
 		}
+
+		return status;
 	}
 
 	@RequestMapping(value="/info/{user}", method = RequestMethod.GET)

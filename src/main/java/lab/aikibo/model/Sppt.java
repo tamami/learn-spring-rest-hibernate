@@ -13,16 +13,20 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 
+import lab.aikibo.constant.SerialConstant;
+
 @Entity
 @Table(name="sppt_terhutang_matre")
 @IdClass(Sppt.SpptPK.class)
 public class Sppt implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = SerialConstant.SERIAL_SPPT;
 
 	@Id
+	@Column(name="NOP", columnDefinition="char")
   private String nop;
 	@Id
+	@Column(name="THN", columnDefinition="char")
 	private String thn;
 	@Column(name="NAMA")
 	private String nama;
@@ -87,7 +91,7 @@ public class Sppt implements Serializable {
 	// --- inner class
 	@Embeddable
 	public static class SpptPK implements Serializable {
-		private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = SerialConstant.SERIAL_SPPT_PK;
 
 		protected String nop;
 		protected String thn;
