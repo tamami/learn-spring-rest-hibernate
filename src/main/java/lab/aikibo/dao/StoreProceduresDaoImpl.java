@@ -15,6 +15,10 @@ import java.util.Date;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
+import org.hibernate.procedure.ProcedureCall;
+import org.hibernate.result.Output;
+import org.hibernate.result.ResultSetOutput;
+import org.hibernate.jpamodelgen.xml.jaxb.ParameterMode;
 
 import org.joda.time.DateTime;
 import org.joda.time.Months;
@@ -85,6 +89,7 @@ public class StoreProceduresDaoImpl extends AbstractDao<Integer, SpptSismiop>
     }
 
     // -- ini cara 3
+    /*
     StoredProcedureQuery query = entityManager
       .createStoredProcedureQuery("sppt_terhutang")
       .registerStoredProcedureParameter(1, SpptSismiop.class, ParameterMode.REF_CURSOR)
@@ -94,6 +99,7 @@ public class StoreProceduresDaoImpl extends AbstractDao<Integer, SpptSismiop>
       .setParameter(2, nop);
     query.execute();
     List<Object[]> post = query.getResultList();
+    */
 
     // -- ini cara 4
     Session session = getSession();
