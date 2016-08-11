@@ -1,9 +1,9 @@
 package lab.aikibo.services;
 
-import lab.aikibo.model.SpptJ;
+import lab.aikibo.model.StatusInq;
 
 public interface SpptServices {
 
-	public SpptJ getSpptByNopThn(String nop, String thn);
+	public StatusInq getSpptByNopThn(String nop, String thn);
 
 }

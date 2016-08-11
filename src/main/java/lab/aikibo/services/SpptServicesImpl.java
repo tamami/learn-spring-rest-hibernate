@@ -8,6 +8,7 @@ import lab.aikibo.dao.SpptDao;
 import lab.aikibo.dao.StoreProceduresDao;
 import lab.aikibo.model.Sppt;
 import lab.aikibo.model.SpptJ;
+import lab.aikibo.model.StatusInq;
 import lab.aikibo.controller.SpptRestController;
 
 @Service("spptServices")
@@ -21,7 +22,7 @@ public class SpptServicesImpl implements SpptServices {
 	private StoreProceduresDao spDao;
 
 	@Override
-	public SpptJ getSpptByNopThn(String nop, String thn) {
+	public StatusInq getSpptByNopThn(String nop, String thn) {
 		//return spptDao.inqSpptByNopThn(nop, thn);
 		return spDao.getDataSppt(nop, thn);
 	}

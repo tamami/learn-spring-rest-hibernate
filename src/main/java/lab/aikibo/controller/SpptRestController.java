@@ -10,12 +10,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.math.BigInteger;
 
+import lab.aikibo.constant.StatusRespond;
 import lab.aikibo.model.Sppt;
 import lab.aikibo.model.SpptJ;
 import lab.aikibo.model.Status;
+import lab.aikibo.model.StatusInq;
+import lab.aikibo.model.StatusTrx;
 import lab.aikibo.model.Message;
 import lab.aikibo.services.SpptServices;
 import lab.aikibo.services.PembayaranServices;
+
+import org.joda.time.DateTime;
 
 @RestController
 public class SpptRestController {
@@ -41,31 +46,74 @@ public class SpptRestController {
 
 	// single inquiry
 	@RequestMapping(value="/sppt/{nop}/{thn}", method = RequestMethod.GET)
-	public SpptJ getDataSppt(@PathVariable("nop") String nop, @PathVariable("thn") String thnPajak) {
+	public StatusInq getDataSppt(@PathVariable("nop") String nop, @PathVariable("thn") String thnPajak) {
 		logger.debug("NOP: " + nop);
 		logger.debug("THN: " + thnPajak);
-		SpptJ sppt = null;
+		StatusInq status = null;
+
+		// test thnPajak
 		try {
-			sppt = spptServices.getSpptByNopThn(nop, thnPajak);
-			logger.debug("Sppt sudah diambil dengan nop : " + sppt.getNop());
+			Integer.parseInt(thnPajak);
+		} catch(NumberFormatException ex) {
+			status = new StatusInq(StatusRespond.THN_PAJAK_BUKAN_ANGKA, "Tahun Pajak Mengandung Karakter bukan Angka", null);
+			return status;
+		}
+
+		try {
+			status = spptServices.getSpptByNopThn(nop, thnPajak);
 		} catch(Exception e) {
 			logger.error(e);
 		}
-
-		return sppt;
+		logger.debug(" >>> GetData >>> " + status);
+		return status;
 	}
 
 	// single transaction
-  @RequestMapping(value="/bayar/{nop}/{thn}/{pokok}/{denda}")
+	// format tanggal : DDMMYYYY
+	// format jam : HH24MI
+  @RequestMapping(value="/bayar/{nop}/{thn}/{pokok}/{denda}/{tglBayar}/{jamBayar}")
 	public Status prosesPembayaran(@PathVariable("nop") String nop,
-			@PathVariable("thn") String thnPajak, @PathVariable("pokok") BigInteger pokok,
-			@PathVariable("denda") BigInteger denda) {
-	  Status status = null;
+			@PathVariable("thn") String thnPajak, @PathVariable("pokok") String pokokString,
+			@PathVariable("denda") String dendaString, @PathVariable("tglBayar") String tglBayarString,
+			@PathVariable("jamBayar")String jamBayarString) {
+	  StatusTrx status = null;
+		BigInteger pokok = null;
+		BigInteger denda = null;
+
+		// pengecekan pokok pembayaran
+		try {
+			pokok = new BigInteger(pokokString);
+		} catch(NumberFormatException ex) {
+			status = new StatusTrx(StatusRespond.JUMLAH_PEMBAYARAN_BUKAN_ANGKA, "Nilai Pokok terdapat karakter bukan angka", null);
+			return status;
+		}
+
+    // pengecekan denda pembayaran
+		try {
+			denda = new BigInteger(dendaString);
+		} catch(NumberFormatException ex) {
+			status = new StatusTrx(StatusRespond.JUMLAH_PEMBAYARAN_BUKAN_ANGKA, "Nilai Denda terdapat karakter bukan angka", null);
+			return status;
+		}
+
+		// cek tanggal bayar, tidak boleh lebih baru daripada tanggal saat ini
+		DateTime currentDateTime = new DateTime();
+		int date = Integer.parseInt(tglBayarString.substring(0,2));
+		int month = Integer.parseInt(tglBayarString.substring(2,4));
+		int year = Integer.parseInt(tglBayarString.substring(4,8));
+		int hour = Integer.parseInt(jamBayarString.substring(0,2));
+		int min = Integer.parseInt(jamBayarString.substring(2,4));
+
+		DateTime tglBayar = new DateTime(year, month, date, hour, min);
+
+    // proses pembayaran
+		/*
 		try {
 			status = pembayaranServices.prosesPembayaran(nop, thnPajak, pokok, denda);
 		} catch(Exception e) {
 			logger.error(e);
 		}
+		*/
 
 		return status;
 	}
