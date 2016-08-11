@@ -1,7 +1,7 @@
 package lab.aikibo.dao;
 
-import lab.aikibo.model.Sppt;
+import lab.aikibo.model.SpptJ;
 
 public interface StoreProceduresDao {
-  public Sppt getDataSppt(String nop, String thn);
+  public SpptJ getDataSppt(String nop, String thn);
 }

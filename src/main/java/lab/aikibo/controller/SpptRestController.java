@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.math.BigInteger;
 
 import lab.aikibo.model.Sppt;
+import lab.aikibo.model.SpptJ;
 import lab.aikibo.model.Status;
 import lab.aikibo.model.Message;
 import lab.aikibo.services.SpptServices;
@@ -40,10 +41,10 @@ public class SpptRestController {
 
 	// single inquiry
 	@RequestMapping(value="/sppt/{nop}/{thn}", method = RequestMethod.GET)
-	public Sppt getDataSppt(@PathVariable("nop") String nop, @PathVariable("thn") String thnPajak) {
+	public SpptJ getDataSppt(@PathVariable("nop") String nop, @PathVariable("thn") String thnPajak) {
 		logger.debug("NOP: " + nop);
 		logger.debug("THN: " + thnPajak);
-		Sppt sppt = null;
+		SpptJ sppt = null;
 		try {
 			sppt = spptServices.getSpptByNopThn(nop, thnPajak);
 			logger.debug("Sppt sudah diambil dengan nop : " + sppt.getNop());
