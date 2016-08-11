@@ -1,9 +1,11 @@
 package lab.aikibo.dao;
 
-import lab.aikibo.model.Status;
+import lab.aikibo.model.StatusTrx;
 
 import java.math.BigInteger;
 
+import org.joda.time.DateTime;
+
 public interface PembayaranDao {
-  public Status prosesPembayaran(String nop, String thn, BigInteger pokok, BigInteger denda);
+  public StatusTrx prosesPembayaran(String nop, String thn, BigInteger pokok, BigInteger denda, DateTime tglBayar);
 }
