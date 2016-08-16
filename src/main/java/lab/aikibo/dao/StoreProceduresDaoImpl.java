@@ -120,22 +120,24 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
 
       callable.executeUpdate();
       ResultSet rs = (ResultSet) callable.getObject(1);
+      ResultSetMetaData rsMeta = rs.getMetaData();
       pembayaranSppt = new PembayaranSppt();
       while(rs.next()) {
         SpptRestController.getLogger().debug(" >>> Berhasil masuk iterasi rs.next");
-        if(rs.getString("kode_error") == null) {
+        SpptRestController.getLogger().debug(" >>> nama kolom yang ada : " + rsMeta.getColumnName(1));
+        if(!rsMeta.getColumnName(1).equals("KODE_ERROR")) {
           SpptRestController.getLogger().debug(" >>> nop-nya ada : " + rs.getString("nop"));
-          pembayaranSppt.setNop(rs.getString("nop"));
-          pembayaranSppt.setThn(rs.getString("thn"));
-          pembayaranSppt.setNtpd(rs.getString("ntpd"));
-          pembayaranSppt.setMataAnggaranPokok(rs.getString("mata_anggaran_pokok"));
-          pembayaranSppt.setPokok(rs.getBigDecimal("pokok").toBigInteger());
-          pembayaranSppt.setMataAnggaranSanksi(rs.getString("mata_anggaran_sanksi"));
-          pembayaranSppt.setSanksi(rs.getBigDecimal("sanksi").toBigInteger());
-          pembayaranSppt.setNamaWp(rs.getString("nama_wp"));
-          pembayaranSppt.setAlamatOp(rs.getString("alamat_op"));
+          pembayaranSppt.setNop(rs.getString("NOP"));
+          pembayaranSppt.setThn(rs.getString("THN"));
+          pembayaranSppt.setNtpd(rs.getString("NTPD"));
+          pembayaranSppt.setMataAnggaranPokok(rs.getString("MATA_ANGGARAN_POKOK"));
+          pembayaranSppt.setPokok(rs.getBigDecimal("POKOK").toBigInteger());
+          pembayaranSppt.setMataAnggaranSanksi(rs.getString("MATA_ANGGARAN_POKOK"));
+          pembayaranSppt.setSanksi(rs.getBigDecimal("SANKSI").toBigInteger());
+          pembayaranSppt.setNamaWp(rs.getString("NAMA_WP"));
+          pembayaranSppt.setAlamatOp(rs.getString("ALAMAT_OP"));
         } else {
-          String infoSp = rs.getString("kode_error");
+          String infoSp = rs.getString("KODE_ERROR");
           if(infoSp.equals("01")) {
             statusTrx = new StatusTrx(StatusRespond.TAGIHAN_TELAH_TERBAYAR, "Tagihan Telah Terbayar atau Pokok Pajak Nihil.", null);
             return statusTrx;
