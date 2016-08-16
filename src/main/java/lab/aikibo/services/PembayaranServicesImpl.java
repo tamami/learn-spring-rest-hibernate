@@ -5,19 +5,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import lab.aikibo.dao.PembayaranDao;
-import lab.aikibo.model.Status;
+import lab.aikibo.dao.StoreProceduresDao;
+import lab.aikibo.model.StatusTrx;
 
-import java.math.BigInteger;
+import org.joda.time.DateTime;
 
 @Service("pembayaranServices")
 @Transactional
 public class PembayaranServicesImpl implements PembayaranServices {
   @Autowired
-  private PembayaranDao pembayaranDao;
+  private StoreProceduresDao spDao;
 
   @Override
-  public Status prosesPembayaran(String nop, String thn, BigInteger pokok, BigInteger denda) {
-    return pembayaranDao.prosesPembayaran(nop, thn, pokok, denda);
+  public StatusTrx prosesPembayaran(String nop, String thn, DateTime tglBayar) {
+    return spDao.prosesPembayaran(nop, thn, tglBayar.toDate());
   }
 }

@@ -71,30 +71,13 @@ public class SpptRestController {
 	// single transaction
 	// format tanggal : DDMMYYYY
 	// format jam : HH24MI
-  @RequestMapping(value="/bayar/{nop}/{thn}/{pokok}/{denda}/{tglBayar}/{jamBayar}")
-	public Status prosesPembayaran(@PathVariable("nop") String nop,
-			@PathVariable("thn") String thnPajak, @PathVariable("pokok") String pokokString,
-			@PathVariable("denda") String dendaString, @PathVariable("tglBayar") String tglBayarString,
+  @RequestMapping(value="/bayar/{nop}/{thn}/{tglBayar}/{jamBayar}")
+	public StatusTrx prosesPembayaran(@PathVariable("nop") String nop,
+			@PathVariable("thn") String thnPajak, @PathVariable("tglBayar") String tglBayarString,
 			@PathVariable("jamBayar")String jamBayarString) {
 	  StatusTrx status = null;
 		BigInteger pokok = null;
 		BigInteger denda = null;
-
-		// pengecekan pokok pembayaran
-		try {
-			pokok = new BigInteger(pokokString);
-		} catch(NumberFormatException ex) {
-			status = new StatusTrx(StatusRespond.JUMLAH_PEMBAYARAN_BUKAN_ANGKA, "Nilai Pokok terdapat karakter bukan angka", null);
-			return status;
-		}
-
-    // pengecekan denda pembayaran
-		try {
-			denda = new BigInteger(dendaString);
-		} catch(NumberFormatException ex) {
-			status = new StatusTrx(StatusRespond.JUMLAH_PEMBAYARAN_BUKAN_ANGKA, "Nilai Denda terdapat karakter bukan angka", null);
-			return status;
-		}
 
 		// cek tanggal bayar, tidak boleh lebih baru daripada tanggal saat ini
 		DateTime currentDateTime = new DateTime();
@@ -107,13 +90,12 @@ public class SpptRestController {
 		DateTime tglBayar = new DateTime(year, month, date, hour, min);
 
     // proses pembayaran
-		/*
 		try {
-			status = pembayaranServices.prosesPembayaran(nop, thnPajak, pokok, denda);
+			status = pembayaranServices.prosesPembayaran(nop, thnPajak, tglBayar);
 		} catch(Exception e) {
 			logger.error(e);
+			logger.debug(" >>> GetData >>> " + status);
 		}
-		*/
 
 		return status;
 	}

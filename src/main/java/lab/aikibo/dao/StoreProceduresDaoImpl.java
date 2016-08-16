@@ -35,6 +35,8 @@ import lab.aikibo.model.Sppt;
 import lab.aikibo.model.SpptJ;
 import lab.aikibo.model.StatusInq;
 import lab.aikibo.model.SpptSismiop;
+import lab.aikibo.model.StatusTrx;
+import lab.aikibo.model.PembayaranSppt;
 
 import lab.aikibo.constant.StatusRespond;
 
@@ -48,12 +50,18 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
   @Autowired
   private BoneCPDataSource boneCPDs;
 
+  CallableStatement callable;
+  Sppt sppt;
+  PembayaranSppt pembayaranSppt;
+  StatusInq status;
+  StatusTrx statusTrx;
+
   public StatusInq getDataSppt(String nop, String thn) {
     // -- ini cara 1; lumpuh saat panggil ke connection() deprecated
 
-    CallableStatement callable = null;
-    Sppt sppt = null;
-    StatusInq status = null;
+    callable = null;
+    sppt = null;
+    status = null;
 
     try {
       callable = boneCPDs.getConnection().prepareCall("call sppt_terhutang(?,?,?)");
@@ -96,6 +104,58 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
       status = new StatusInq(StatusRespond.DATABASE_ERROR, "Kesalahan DB", null);
     }
     return status;
+  }
+
+  public StatusTrx prosesPembayaran(String nop, String thn, Date tglBayar) {
+    callable = null;
+    pembayaranSppt = null;
+    statusTrx = null;
+
+    try {
+      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?,?,?)");
+      callable.registerOutParameter(1, OracleTypes.CURSOR);
+      callable.setString(2, nop);
+      callable.setString(3, thn);
+      callable.setDate(4, new java.sql.Date(tglBayar.getTime()));
+
+      callable.executeUpdate();
+      ResultSet rs = (ResultSet) callable.getObject(1);
+      pembayaranSppt = new PembayaranSppt();
+      while(rs.next()) {
+        if(rs.getString("kode_error") == null) {
+          pembayaranSppt.setNop(rs.getString("nop"));
+          pembayaranSppt.setThn(rs.getString("thn"));
+          pembayaranSppt.setNtpd(rs.getString("ntpd"));
+          pembayaranSppt.setMataAnggaranPokok(rs.getString("mata_anggaran_pokok"));
+          pembayaranSppt.setPokok(rs.getBigDecimal("pokok").toBigInteger());
+          pembayaranSppt.setMataAnggaranSanksi(rs.getString("mata_anggaran_sanksi"));
+          pembayaranSppt.setSanksi(rs.getBigDecimal("sanksi").toBigInteger());
+          pembayaranSppt.setNamaWp(rs.getString("nama_wp"));
+          pembayaranSppt.setAlamatOp(rs.getString("alamat_op"));
+        } else {
+          String infoSp = rs.getString("kode_error");
+          if(infoSp.equals("01")) {
+            statusTrx = new StatusTrx(StatusRespond.TAGIHAN_TELAH_TERBAYAR, "Tagihan Telah Terbayar atau Pokok Pajak Nihil.", null);
+            return statusTrx;
+          } else if(infoSp.equals("02")) {
+            // not used
+          } else if(infoSp.equals("03")) {
+            statusTrx = new StatusTrx(StatusRespond.TAGIHAN_TELAH_TERBAYAR, "Tagihan Telah Terbayar", null);
+            return statusTrx;
+          } else if(infoSp.equals("04")) {
+            statusTrx = new StatusTrx(StatusRespond.JUMLAH_SETORAN_NIHIL, "Tagihan SPPT Telah Dibatalkan", null);
+            return statusTrx;
+          }
+        }
+      }
+      statusTrx = new StatusTrx(StatusRespond.APPROVED, "Pembayaran Telah Tercatat", pembayaranSppt);
+      
+    } catch(Exception ex) {
+      statusTrx = new StatusTrx(StatusRespond.DATABASE_ERROR, "Kesalahan Server", null);
+      return statusTrx;
+    }
+
+    return statusTrx;
   }
 
   private BigInteger hitungDenda(BigInteger pokok, Date tglJatuhTempo) {
