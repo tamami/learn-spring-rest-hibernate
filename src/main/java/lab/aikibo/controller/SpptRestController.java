@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.math.BigInteger;
 
-import javax.servlet.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import lab.aikibo.constant.StatusRespond;
 import lab.aikibo.model.Sppt;
