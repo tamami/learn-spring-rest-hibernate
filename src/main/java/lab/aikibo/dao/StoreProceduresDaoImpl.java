@@ -112,7 +112,7 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
     statusTrx = null;
 
     try {
-      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?,?,?)");
+      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?)");
       callable.registerOutParameter(1, OracleTypes.CURSOR);
       callable.setString(2, nop);
       callable.setString(3, thn);
@@ -122,7 +122,9 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
       ResultSet rs = (ResultSet) callable.getObject(1);
       pembayaranSppt = new PembayaranSppt();
       while(rs.next()) {
+        SpptRestController.getLogger().debug(" >>> Berhasil masuk iterasi rs.next");
         if(rs.getString("kode_error") == null) {
+          SpptRestController.getLogger().debug(" >>> nop-nya ada : " + rs.getString("nop"));
           pembayaranSppt.setNop(rs.getString("nop"));
           pembayaranSppt.setThn(rs.getString("thn"));
           pembayaranSppt.setNtpd(rs.getString("ntpd"));
@@ -149,8 +151,8 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
         }
       }
       statusTrx = new StatusTrx(StatusRespond.APPROVED, "Pembayaran Telah Tercatat", pembayaranSppt);
-      
     } catch(Exception ex) {
+      SpptRestController.getLogger().debug(" >>> hasil Exception : " + ex);
       statusTrx = new StatusTrx(StatusRespond.DATABASE_ERROR, "Kesalahan Server", null);
       return statusTrx;
     }
