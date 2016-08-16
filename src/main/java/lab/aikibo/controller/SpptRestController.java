@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.math.BigInteger;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.HttpServletRequest;
 
 import lab.aikibo.constant.StatusRespond;
 import lab.aikibo.model.Sppt;
@@ -76,7 +76,7 @@ public class SpptRestController {
   @RequestMapping(value="/bayar/{nop}/{thn}/{tglBayar}/{jamBayar}", method = RequestMethod.GET)
 	public StatusTrx prosesPembayaran(@PathVariable("nop") String nop,
 			@PathVariable("thn") String thnPajak, @PathVariable("tglBayar") String tglBayarString,
-			@PathVariable("jamBayar")String jamBayarString, ServletRequest request) {
+			@PathVariable("jamBayar")String jamBayarString, HttpServletRequest request) {
 	  StatusTrx status = null;
 		BigInteger pokok = null;
 		BigInteger denda = null;
@@ -84,6 +84,7 @@ public class SpptRestController {
 		if(ipClient == null) {
 			ipClient = request.getRemoteAddr();
 		}
+		logger.debug(" >>> IP CLIENT: " + ipClient);
 
 		// cek tanggal bayar, tidak boleh lebih baru daripada tanggal saat ini
 		int date = Integer.parseInt(tglBayarString.substring(0,2));
