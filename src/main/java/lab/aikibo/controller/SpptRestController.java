@@ -80,7 +80,6 @@ public class SpptRestController {
 		BigInteger denda = null;
 
 		// cek tanggal bayar, tidak boleh lebih baru daripada tanggal saat ini
-		DateTime currentDateTime = new DateTime();
 		int date = Integer.parseInt(tglBayarString.substring(0,2));
 		int month = Integer.parseInt(tglBayarString.substring(2,4));
 		int year = Integer.parseInt(tglBayarString.substring(4,8));
@@ -88,7 +87,7 @@ public class SpptRestController {
 		int min = Integer.parseInt(jamBayarString.substring(2,4));
 
 		DateTime tglBayar = new DateTime(year, month, date, hour, min);
-		if(tglBayar > currentDateTime) {
+		if(tglBayar.isAfterNow()) {
 			// keluarkan pesan error
 			status = new StatusTrx(StatusRespond.TGL_JAM_BAYAR_LD_TGL_JAM_KIRIM,
 			    "Tanggal atau jam pada saat dibayarkan melebihi tanggal dan jam saat ini", null);
