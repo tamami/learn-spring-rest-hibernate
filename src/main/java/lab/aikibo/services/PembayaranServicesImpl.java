@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import lab.aikibo.dao.StoreProceduresDao;
+
 import lab.aikibo.model.StatusTrx;
 
 import org.joda.time.DateTime;
