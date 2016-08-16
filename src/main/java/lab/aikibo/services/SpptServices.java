@@ -4,6 +4,6 @@ import lab.aikibo.model.StatusInq;
 
 public interface SpptServices {
 
-	public StatusInq getSpptByNopThn(String nop, String thn);
+	public StatusInq getSpptByNopThn(String nop, String thn, String ipClient);
 
 }

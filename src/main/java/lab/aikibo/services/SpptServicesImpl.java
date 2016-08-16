@@ -22,9 +22,9 @@ public class SpptServicesImpl implements SpptServices {
 	private StoreProceduresDao spDao;
 
 	@Override
-	public StatusInq getSpptByNopThn(String nop, String thn) {
+	public StatusInq getSpptByNopThn(String nop, String thn, String ipClient) {
 		//return spptDao.inqSpptByNopThn(nop, thn);
-		return spDao.getDataSppt(nop, thn);
+		return spDao.getDataSppt(nop, thn, ipClient);
 	}
 
 }

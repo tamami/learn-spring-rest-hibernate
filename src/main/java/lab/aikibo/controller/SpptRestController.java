@@ -21,6 +21,7 @@ import lab.aikibo.model.StatusTrx;
 import lab.aikibo.model.Message;
 import lab.aikibo.services.SpptServices;
 import lab.aikibo.services.PembayaranServices;
+import lab.aikibo.services.ReversalServices;
 
 import org.joda.time.DateTime;
 
@@ -32,6 +33,9 @@ public class SpptRestController {
 
 	@Autowired
 	PembayaranServices pembayaranServices;
+
+	@Autowired
+	ReversalServices reversalServices;
 
 	static final Logger logger = Logger.getLogger(SpptRestController.class);
 
@@ -103,12 +107,34 @@ public class SpptRestController {
 
     // proses pembayaran
 		try {
-      status = pembayaranServices.prosesPembayaran(nop, thnPajak, tglBayar);
+      status = pembayaranServices.prosesPembayaran(nop, thnPajak, tglBayar, ipClient);
 		} catch(Exception e) {
 			logger.error(e);
 			logger.debug(" >>> GetData >>> " + status);
 		}
 
+		return status;
+	}
+
+	@RequestMapping(value="/reversal/{nop}/{thn}/{ntpd}", method = RequestMethod.GET)
+	public StatusRev prosesReversal(@PathVariable("nop") String nop,
+	    @PathVariable("thn") String thn, @PathVariable("ntpd") String ntpd,
+			HttpServletRequest request) {
+    StatusRev status = null;
+
+		// get IP Client
+		String ipClient = request.getHeader("X-FORWARDED-FOR");
+		if(ipClient == null) {
+			ipClient = request.getRemoteAddr();
+		}
+		logger.debug(" >>> IP CLIENT: " + ipClient);
+
+		try {
+			status = reversalServices.prosesReversal(nop, thn, ntpd, ipClient);
+		} catch(Exception ex) {
+			logger.error(ex);
+			logger.debug(" >>> GetData >>> " + status);
+		}
 		return status;
 	}
 

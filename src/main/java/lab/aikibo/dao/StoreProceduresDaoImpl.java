@@ -53,8 +53,10 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
   CallableStatement callable;
   Sppt sppt;
   PembayaranSppt pembayaranSppt;
+  ReversalPembayaran revPembayaran;
   StatusInq status;
   StatusTrx statusTrx;
+  StatusRev statusRev;
 
   public StatusInq getDataSppt(String nop, String thn) {
     // -- ini cara 1; lumpuh saat panggil ke connection() deprecated
@@ -106,17 +108,18 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
     return status;
   }
 
-  public StatusTrx prosesPembayaran(String nop, String thn, Date tglBayar) {
+  public StatusTrx prosesPembayaran(String nop, String thn, Date tglBayar, String ipClient) {
     callable = null;
     pembayaranSppt = null;
     statusTrx = null;
 
     try {
-      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?)");
+      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?,?)");
       callable.registerOutParameter(1, OracleTypes.CURSOR);
       callable.setString(2, nop);
       callable.setString(3, thn);
       callable.setDate(4, new java.sql.Date(tglBayar.getTime()));
+      callable.setString(5, ipClient);
 
       callable.executeUpdate();
       ResultSet rs = (ResultSet) callable.getObject(1);
@@ -160,6 +163,25 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
     }
 
     return statusTrx;
+  }
+
+  public StatusRev reversalPembayaran(String nop, String thn, String ntpd, String ipClient) {
+    callable = null;
+    revPembayaran = null;
+    statusRev = null;
+
+    try {
+      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?,?)");
+      callable.registerOutParameter(1, OracleTypes.CURSOR);
+      callable.setString(2, nop);
+      callable.setString(3, thn);
+      callable.setDate(4, ntpd);
+      callable.setString(5, ipClient);
+    } catch(Exception ex) {
+      SpptRestController.getLogger().debug(" >>> hasil Exception : " + ex);
+      statusRev = new StatusRev(StatusRepond.DATABASE_ERROR, "Kesalahan Server", null);
+      return statusRev;
+    }
   }
 
   private BigInteger hitungDenda(BigInteger pokok, Date tglJatuhTempo) {
