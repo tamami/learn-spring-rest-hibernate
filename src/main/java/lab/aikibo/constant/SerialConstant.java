@@ -12,6 +12,6 @@ public class SerialConstant {
   public static final long SERIAL_REF_KECAMATAN_PK = 8L;
   public static final long SERIAL_PEMBAYARAN_SPPT = 9L;
   public static final long SERIAL_PEMBAYARAN_SPPT_PK = 10L;
-
+  public static final long SERIAL_REVERSAL_PEMBAYARAN = 11L;
 
 }

@@ -17,7 +17,7 @@ public class PembayaranServicesImpl implements PembayaranServices {
   private StoreProceduresDao spDao;
 
   @Override
-  public StatusTrx prosesPembayaran(String nop, String thn, DateTime tglBayar) {
-    return spDao.prosesPembayaran(nop, thn, tglBayar.toDate());
+  public StatusTrx prosesPembayaran(String nop, String thn, DateTime tglBayar, String ipClient) {
+    return spDao.prosesPembayaran(nop, thn, tglBayar.toDate(), ipClient);
   }
 }

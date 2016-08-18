@@ -6,5 +6,5 @@ import java.math.BigInteger;
 import org.joda.time.DateTime;
 
 public interface PembayaranServices {
-  public StatusTrx prosesPembayaran(String nop, String thn, DateTime tglBayar);
+  public StatusTrx prosesPembayaran(String nop, String thn, DateTime tglBayar, String ipClient);
 }

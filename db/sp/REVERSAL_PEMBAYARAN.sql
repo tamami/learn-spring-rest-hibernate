@@ -1,5 +1,5 @@
 CREATE or replace procedure reversal_pembayaran(c_data out sys_refcursor,
-  nop in varchar, thn in varchar, ntpd in varchar)
+  nop in varchar, thn in varchar, ntpd in varchar, ip_client in varchar)
 is
   v_adaData numeric;
   v_kdPropinsi sppt.kd_propinsi%type;
@@ -78,9 +78,11 @@ begin
 
   -- catat di log_reversal
   insert into log_reversal log_r
-    (log_r.nop, log_r.thn, log_r.ntpd)
-  values (nop, thn, ntpd);
+    (log_r.nop, log_r.thn, log_r.ntpd, log_r.ip_client)
+  values (nop, thn, ntpd, ip_client);
   commit;
+
+  select nop, thn, ntpd from dual;
 
   <<exit_karena_error>>
   return;

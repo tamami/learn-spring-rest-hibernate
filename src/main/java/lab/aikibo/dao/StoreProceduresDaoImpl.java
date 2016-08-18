@@ -34,9 +34,11 @@ import com.jolbox.bonecp.BoneCPDataSource;
 import lab.aikibo.model.Sppt;
 import lab.aikibo.model.SpptJ;
 import lab.aikibo.model.StatusInq;
+import lab.aikibo.model.StatusRev;
 import lab.aikibo.model.SpptSismiop;
 import lab.aikibo.model.StatusTrx;
 import lab.aikibo.model.PembayaranSppt;
+import lab.aikibo.model.ReversalPembayaran;
 
 import lab.aikibo.constant.StatusRespond;
 
@@ -58,7 +60,7 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
   StatusTrx statusTrx;
   StatusRev statusRev;
 
-  public StatusInq getDataSppt(String nop, String thn) {
+  public StatusInq getDataSppt(String nop, String thn, String ipClient) {
     // -- ini cara 1; lumpuh saat panggil ke connection() deprecated
 
     callable = null;
@@ -175,13 +177,35 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
       callable.registerOutParameter(1, OracleTypes.CURSOR);
       callable.setString(2, nop);
       callable.setString(3, thn);
-      callable.setDate(4, ntpd);
+      callable.setString(4, ntpd);
       callable.setString(5, ipClient);
+      callable.executeUpdate();
+
+      ResultSet rs = (ResultSet) callable.getObject(1);
+      ResultSetMetaData rsMeta = rs.getMetaData();
+      ReversalPembayaran revBayar = new ReversalPembayaran();
+      while(rs.next()) {
+        if(!rsMeta.getColumnName(1).equals("KODE_ERROR")) {
+          revBayar.setNop(rs.getString("NOP"));
+          revBayar.setThn(rs.getString("THN"));
+          revBayar.setNtpd(rs.getString("NTPD"));
+        } else {
+          String infoSp = rs.getString("KODE_ERROR");
+          if(infoSp.equals("01")) {
+            statusRev = new StatusRev(StatusRespond.DATA_INQ_NIHIL, "Data Yang Diminta Tidak Ada", null);
+            return statusRev;
+          } else if(infoSp.equals("02")) {
+            statusRev = new StatusRev(StatusRespond.DATABASE_ERROR, "Data tersebut Ganda", null);
+            return statusRev;
+          }
+        }
+      }
     } catch(Exception ex) {
       SpptRestController.getLogger().debug(" >>> hasil Exception : " + ex);
-      statusRev = new StatusRev(StatusRepond.DATABASE_ERROR, "Kesalahan Server", null);
+      statusRev = new StatusRev(StatusRespond.DATABASE_ERROR, "Kesalahan Server", null);
       return statusRev;
     }
+    return statusRev;
   }
 
   private BigInteger hitungDenda(BigInteger pokok, Date tglJatuhTempo) {

@@ -18,6 +18,7 @@ import lab.aikibo.model.SpptJ;
 import lab.aikibo.model.Status;
 import lab.aikibo.model.StatusInq;
 import lab.aikibo.model.StatusTrx;
+import lab.aikibo.model.StatusRev;
 import lab.aikibo.model.Message;
 import lab.aikibo.services.SpptServices;
 import lab.aikibo.services.PembayaranServices;
@@ -52,9 +53,14 @@ public class SpptRestController {
 
 	// single inquiry
 	@RequestMapping(value="/sppt/{nop}/{thn}", method = RequestMethod.GET)
-	public StatusInq getDataSppt(@PathVariable("nop") String nop, @PathVariable("thn") String thnPajak) {
+	public StatusInq getDataSppt(@PathVariable("nop") String nop, @PathVariable("thn") String thnPajak,
+	    HttpServletRequest request) {
 		logger.debug("NOP: " + nop);
 		logger.debug("THN: " + thnPajak);
+		String ipClient = request.getHeader("X-FORWARDED-FOR");
+		if(ipClient == null) {
+			ipClient = request.getRemoteAddr();
+		}
 		StatusInq status = null;
 
 		// test thnPajak
@@ -66,7 +72,7 @@ public class SpptRestController {
 		}
 
 		try {
-			status = spptServices.getSpptByNopThn(nop, thnPajak);
+			status = spptServices.getSpptByNopThn(nop, thnPajak, ipClient);
 		} catch(Exception e) {
 			logger.error(e);
 		}

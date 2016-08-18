@@ -5,7 +5,7 @@ public class StatusRev extends Status {
 
   public StatusRev() {}
 
-  public StatusRev(int code, int message, ReversalPembayaran revPembayaran) {
+  public StatusRev(int code, String message, ReversalPembayaran revPembayaran) {
     super(code, message);
     this.revPembayaran = revPembayaran;
   }
