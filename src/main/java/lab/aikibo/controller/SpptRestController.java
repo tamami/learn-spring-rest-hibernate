@@ -47,7 +47,12 @@ public class SpptRestController {
 	@RequestMapping("/")
 	public String welcome() {
 		String info = "Selamat Datang<br>";
-		info += "gunakan perintah berikut:";
+		info += "gunakan perintah berikut:<br>";
+		info += "<dl>";
+		info += "<dt>sppt/{nop}/{thn}</dt>";
+		info += "<dd>untuk inquiry data per nop</dd>";
+		info += "<dt>bayar/{nop}/{thn}/{tglBayar}/{jamBayar}"
+		info += "</dl>";
 		return info;
 	}
 

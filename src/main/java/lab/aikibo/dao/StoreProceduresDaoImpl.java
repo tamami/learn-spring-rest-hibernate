@@ -173,7 +173,7 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
     statusRev = null;
 
     try {
-      callable = boneCPDs.getConnection().prepareCall("call proses_pembayaran(?,?,?,?,?)");
+      callable = boneCPDs.getConnection().prepareCall("call reversal_pembayaran(?,?,?,?,?)");
       callable.registerOutParameter(1, OracleTypes.CURSOR);
       callable.setString(2, nop);
       callable.setString(3, thn);
