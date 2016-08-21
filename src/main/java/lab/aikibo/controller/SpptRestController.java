@@ -26,6 +26,23 @@ import lab.aikibo.services.ReversalServices;
 
 import org.joda.time.DateTime;
 
+/**
+ * Mapping Rest dengan pola berikut :
+ *
+ * /Spring-Rest-Hibernate-Pbb/sppt/{nop}/{thn}
+ *   untuk inquiry data PBB
+ *
+ * /Spring-Rest-Hibernate-Pbb/bayar/{nop}/{thn}/{tglBayar}/{jamBayar}
+ *   untuk melakukan pencatatan pembayaran, request ini akan secara otomatis mencatatkan pembayaran
+ *   ke tabel pembayaran_sppt, bila ada kesalahan, maka perlu request reversal
+ *   Format tglBayar: DDMMYYYY
+ *   Format jamBayar: HH24MI
+ *
+ * /Spring-Rest-Hibernate-Pbb/reversal/{nop}/{thn}/{ntpd}
+ *   melakukan reversal atas pencatatan pembayaran sebelumnya.
+ *
+ * @author: tamami
+ */
 @RestController
 public class SpptRestController {
 
@@ -51,7 +68,10 @@ public class SpptRestController {
 		info += "<dl>";
 		info += "<dt>sppt/{nop}/{thn}</dt>";
 		info += "<dd>untuk inquiry data per nop</dd>";
-		info += "<dt>bayar/{nop}/{thn}/{tglBayar}/{jamBayar}"
+		info += "<dt>bayar/{nop}/{thn}/{tglBayar}/{jamBayar}</dt>";
+		info += "<dd>untuk melakukan pembayaran, data akan otomatis tersimpan sebagai transaksi pembayaran apabila ini di-request</dd>";
+		info += "<dt>reversal/{nop}/{thn}/{ntpd}</dt>";
+		info += "<dd>untuk melakukan reversal pembayaran</dd>";
 		info += "</dl>";
 		return info;
 	}
