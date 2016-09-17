@@ -11,7 +11,7 @@ import lab.aikibo.model.SpptJ;
 import lab.aikibo.model.StatusInq;
 import lab.aikibo.controller.SpptRestController;
 
-@Service("spptServices")
+@Service("sppt")
 @Transactional
 public class SpptServicesImpl implements SpptServices {
 
