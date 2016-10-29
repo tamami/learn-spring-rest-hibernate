@@ -8,6 +8,14 @@
   <name>learn-spring-rest-hibernate Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <repositories>
+    <repository>
+      <id>jahia</id>
+      <name>Jahia Repo</name>
+      <url>http://maven.jahia.org/maven2/</url>
+    </repository>
+  </repositories>
+
   <properties>
     <spring.version>4.0.6.RELEASE</spring.version>
     <hibernate.version>4.3.6.Final</hibernate.version>
@@ -22,13 +30,14 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
-      <scope>test</scope>
+      <!-- 
       <exclusions>
         <exclusion>
           <groupId>org.hamcrest</groupId>
           <artifactId>hamcrest-core</artifactId>
         </exclusion>
       </exclusions>
+       -->
     </dependency>
 
     <!-- log4j -->
@@ -40,9 +49,9 @@
 
     <!-- oracle ojdbc -->
     <dependency>
-      <groupId>com.oracle</groupId>
+      <groupId>oracle</groupId>
       <artifactId>ojdbc14</artifactId>
-      <version>10.2.0.4.0</version>
+      <version>10.2.0.4</version>
     </dependency>
 
     <!-- spring -->
@@ -69,6 +78,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
       <version>${spring.version}</version>
     </dependency>
 
@@ -132,6 +146,13 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
+    </dependency>
+
+    <!-- mocking -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.2.9</version>
     </dependency>
 
     <!-- jackson for convert POJO to json format -->
