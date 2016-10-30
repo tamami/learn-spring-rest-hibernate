@@ -51,7 +51,7 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
   private SessionFactory sessionFactory;
   @Autowired
   private BoneCPDataSource boneCPDs;
-
+ 
   CallableStatement callable;
   Sppt sppt;
   PembayaranSppt pembayaranSppt;
@@ -97,7 +97,7 @@ public class StoreProceduresDaoImpl implements StoreProceduresDao {
         sppt.setPokok(pokok);
         sppt.setDenda(denda);
       }
-      if(sppt.getNop() == null) {
+      if(sppt.getNama() == null) {
         status = new StatusInq(StatusRespond.DATA_INQ_NIHIL, "Data Tidak Ditemukan", null);
         return status;
       }
