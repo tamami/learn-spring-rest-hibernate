@@ -10,6 +10,11 @@
 
   <repositories>
     <repository>
+      <id>maven-central</id>
+      <name>Maven Central Repo</name>
+      <url>http://central.maven.org/maven2/</url>
+    </repository>
+    <repository>
       <id>jahia</id>
       <name>Jahia Repo</name>
       <url>http://maven.jahia.org/maven2/</url>
@@ -17,7 +22,7 @@
   </repositories>
 
   <properties>
-    <spring.version>4.0.6.RELEASE</spring.version>
+    <spring.version>4.3.3.RELEASE</spring.version>
     <hibernate.version>4.3.6.Final</hibernate.version>
     <log4j.version>1.2.17</log4j.version>
     <jackson.version>2.7.5</jackson.version>
@@ -29,7 +34,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.12</version>
       <!-- 
       <exclusions>
         <exclusion>
