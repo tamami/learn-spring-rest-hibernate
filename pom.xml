@@ -14,6 +14,16 @@
       <name>Jahia Repo</name>
       <url>http://maven.jahia.org/maven2/</url>
     </repository>
+    <repository>
+      <id>maven</id>
+      <name>Maven</name>
+      <url>http://central.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>spring-repo</id>
+      <name>Spring Repository</name>
+      <url>http://repo.spring.io.release</url>
+    </repository>
   </repositories>
 
   <properties>
@@ -25,11 +35,18 @@
   </properties>
 
   <dependencies>
-    <!-- unit testing -->
+    <!-- unit testing -->public String getStatusPembayaran() {
+    return statusPembayaran;
+    }
+
+    public void setStatusPembayaran(String statusPembayaran) {
+    this.statusPembayaran = statusPembayaran;
+    }
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
+      <scope>test</scope>
       <!-- 
       <exclusions>
         <exclusion>

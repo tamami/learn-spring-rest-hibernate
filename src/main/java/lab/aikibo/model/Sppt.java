@@ -37,6 +37,10 @@ public class Sppt implements Serializable {
 	@Column(name="DENDA")
 	private BigInteger denda;
 
+
+
+	private String statusPembayaran;
+
 	// --- setter getter
 
 	public String getNop() {
@@ -85,6 +89,14 @@ public class Sppt implements Serializable {
 
 	public void setDenda(BigInteger denda) {
 		this.denda = denda;
+	}
+
+	public String getStatusPembayaran() {
+		return statusPembayaran;
+	}
+
+	public void setStatusPembayaran(String statusPembayaran) {
+		this.statusPembayaran = statusPembayaran;
 	}
 
 

@@ -2,6 +2,8 @@ package lab.aikibo.controller;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+
+import lab.aikibo.config.AppConfig;
 import org.junit.runner.RunWith;
 import lab.aikibo.constant.StatusRespond;
 import lab.aikibo.model.StatusInq;
