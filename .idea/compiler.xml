@@ -26,7 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="learn-spring-rest-hibernate" target="1.5" />
+      <module name="learn-spring-rest-hibernate" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

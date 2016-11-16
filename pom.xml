@@ -8,6 +8,7 @@
   <name>learn-spring-rest-hibernate Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <!--
   <repositories>
     <repository>
       <id>jahia</id>
@@ -25,6 +26,7 @@
       <url>http://repo.spring.io.release</url>
     </repository>
   </repositories>
+  -->
 
   <properties>
     <spring.version>4.0.6.RELEASE</spring.version>
@@ -35,13 +37,7 @@
   </properties>
 
   <dependencies>
-    <!-- unit testing -->public String getStatusPembayaran() {
-    return statusPembayaran;
-    }
-
-    public void setStatusPembayaran(String statusPembayaran) {
-    this.statusPembayaran = statusPembayaran;
-    }
+    <!-- unit testing -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -184,6 +180,12 @@
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>2.9.4</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
