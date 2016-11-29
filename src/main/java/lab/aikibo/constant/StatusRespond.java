@@ -2,7 +2,7 @@ package lab.aikibo.constant;
 
 public class StatusRespond {
 
-  public static final int APPROVED = 1;
+  public static final int APPROVED = 01;
   public static final int DATA_INQ_NIHIL = 10;
   public static final int TAGIHAN_TELAH_TERBAYAR = 13;
   public static final int JUMLAH_SETORAN_NIHIL = 03; // pbb = 0 rupiah
